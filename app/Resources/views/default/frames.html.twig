@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid main-container">
+        <div class="col-md-2 sidebar">
+            <div class="row">
+                <!-- uncomment code for absolute positioning tweek see top comment in css -->
+                <div class="absolute-wrapper"> </div>
+                <!-- Menu -->
+
+                <div class="side-menu">
+                    <nav class="navbar navbar-default" role="navigation" style="border: 1px solid #3071aa;border-radius: 4px;">
+                        <!-- Main Menu -->
+                        <div class="side-menu-container">
+                            <ul class="nav navbar-nav">
+
+
+                                <li class="panel panel-default " id="dropdown">
+                                    <a data-toggle="collapse" href="#dropdown-lvl1">
+                                        <span class="glyphicon glyphicon-chevron-right"></span> Clipart <span class="caret"></span>
+                                    </a>
+                                </li>
+                                <li class="panel panel-default" id="dropdown">
+                                    <a data-toggle="collapse" href="#dropdown-lvl1">
+                                        <span class="glyphicon glyphicon-chevron-right"></span> Movies <span class="caret"></span>
+                                    </a>
+                                </li>
+
+                                <!-- Dropdown-->
+                                <li class="panel panel-default" id="dropdown">
+                                    <a data-toggle="collapse" href="#dropdown-lvl1">
+                                        <span class="glyphicon glyphicon-chevron-right"></span> Jaargetijden <span class="caret"></span>
+                                    </a>
+
+
+
+                                    <!-- Dropdown level 1 -->
+                                    <div id="dropdown-lvl1" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <ul class="nav navbar-nav">
+
+
+                                                <!-- Dropdown level 2 -->
+                                                <li class="panel panel-default" id="dropdown">
+                                                    <a data-toggle="collapse" href="#dropdown-lvl2">
+                                                        <span class="glyphicon glyphicon-folder-open"></span> Lente
+
+                                                    </a>
+                                                    <a data-toggle="collapse" href="#dropdown-lvl2">
+
+                                                        <span class="glyphicon glyphicon-folder-open"></span> Herfst
+
+
+                                                    </a>
+                                                    <a data-toggle="collapse" href="#dropdown-lvl2">
+
+                                                        <span class="glyphicon glyphicon-folder-open active"></span> Winter
+
+                                                    </a>
+                                                    <a data-toggle="collapse" href="#dropdown-lvl2">
+                                                        <span class="glyphicon glyphicon-folder-open"></span> Zomer
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+
+
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </nav>
+
+                </div>
+            </div>  		</div>
+        <div class="col-md-10 ">
+            <div class="panel  panel-primary">
+                <div class="panel-heading text-center">
+                    Frames
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-4">
+                        <div class="thumbnail">
+                            <img src="{{ asset('images/Afbeelding1.png') }}">
+                            <div class="caption">
+                                <p>Grootte: 450x150px </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="thumbnail" >
+                            <img src="{{ asset('images/Afbeelding4.png') }}">
+                            <div class="caption">
+                                <p>Grootte: 250x150px </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <nav aria-label="Page navigation">
+                    <div class="text-center">
+                        <ul class="pagination">
+                            <li>
+                                <a href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li>
+                                <a href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

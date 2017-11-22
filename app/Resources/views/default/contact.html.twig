@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h3 align="center">Contact</h3>
+    <hr>
+    <div class="col-md-4 col-md-offset-4">
+    {{ form_start(contact) }}
+    {{ form_widget(contact) }}
+    {{ form_end(contact) }}
+    </div>
+{% endblock %}

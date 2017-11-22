@@ -1,0 +1,35 @@
+{% extends 'adminbase.html.twig' %}
+
+{% block body %}
+    {% include 'adminsidebar.html.twig' %}
+    <div class="col-md-10 ">
+        <div class="panel  panel-primary">
+            <div class="panel-heading text-center">
+                Frames
+                <a href="{{ url('admin_frame_new') }}" class="btn btn-default btn-xs pull-right" role="button">Nieuwe frame</a>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Afbeelding</th>
+                        <th class="text-center">Actie</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for frame in frames %}
+                        <tr>
+                            <td>{{ frame.name }}</td>
+                            <td><img width="70px" src="{{ asset('uploads/' ~ frame.imageName) }}"></td>
+                            <td class="text-center"><a class='btn btn-info btn-xs' href="{{ path('frame_edit', {'id': frame.id}) }}"><span class="glyphicon glyphicon-edit"></span> Bijwerken</a> <a href="{{ path('frame_delete', {'id': frame.id}) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Verwijderen</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

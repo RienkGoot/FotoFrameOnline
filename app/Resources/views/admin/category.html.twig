@@ -1,0 +1,39 @@
+{% extends 'adminbase.html.twig' %}
+
+
+{% block body %}
+    {% include 'adminsidebar.html.twig' %}
+
+    <div class="col-md-10 ">
+        <div class="panel  panel-primary">
+            <div class="panel-heading text-center">
+                Categorieën
+                <a href="{{ url('admin_category_new') }}" class="btn btn-default btn-xs pull-right" role="button">Nieuwe categorie</a>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Categorie afbeelding</th>
+                        <th>Gekoppeld aan</th>
+                        <th class="text-center">Actie</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for category in categories %}
+                        <tr>
+                            <td>{{ category.name }}</td>
+                            <td><img width="70px" src="{{ asset('uploads/' ~ category.imageName) }}"></td>
+                            <td>{% for subcategory in category.subcategory %} -{{ subcategory.name }}<br> {% endfor %}</td>
+                            <td class="text-center"><a class='btn btn-info btn-xs' href="{{ path('category_edit', {'id': category.id}) }}"><span class="glyphicon glyphicon-edit"></span> Bijwerken</a> <a href="{{ path('category_delete', {'id': category.id}) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Verwijderen</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
