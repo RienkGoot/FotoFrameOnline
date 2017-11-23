@@ -19,4 +19,24 @@ class CategoryController extends Controller
             'categories' => $categories
         ));
     }
+
+    /**
+     * @Route("/category/{id}", name="category_subcategory")
+     */
+    public function CatAction($id)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Category');
+
+        $query = $repository->createQueryBuilder('t')
+            ->where('t.id = :id')
+            ->setParameter("id", $id)
+            ->getQuery();
+
+        $categories = $query->getResult();
+
+
+        return $this->render('default/subcategory.html.twig',array(
+        'categories' => $categories )
+        );
+    }
 }

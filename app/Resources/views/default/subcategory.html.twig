@@ -81,31 +81,20 @@
                     Subcategorieën
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-3">
-                        <a href="{{ url('subcategory') }}">
-                            <img src="{{ asset('images/lente.png') }}" style="width: 150px;">
-                        </a>
-                        <p>Downloads: <span class="label label-primary">50x</span></p>
-                    </div>
 
-                    <div class="col-md-3">
-                        <a href="{{ url('subcategory') }}">
-                            <img src="{{ asset('images/herfst.png') }}" style="width: 150px;">
-                        </a>
-                        <p>Downloads: <span class="label label-primary">30x</span></p>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="{{ url('subcategory') }}">
-                            <img src="{{ asset('images/winter.png') }}" style="width: 150px;">
-                        </a>
-                        <p>Downloads: <span class="label label-primary">50x</span></p>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="{{ url('subcategory') }}">
-                            <img src="{{ asset('images/zomer.png') }}" style="width: 150px;">
-                        </a>
-                        <p>Downloads: <span class="label label-primary">20x</span></p>
-                    </div>
+                    {% for category in categories %}
+                        {% for subcategory in category.subcategory %}
+                            <div class="col-md-3" style="height:210px">
+                                <a href="{{ path('category_subcategory', {'id': category.id}) }}">
+                                    <img src="{{ asset('uploads/' ~ subcategory.imageName) }}" width="160px">
+                                </a>
+                                <p>Downloads: <span class="label label-primary">30x</span></p>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+
+
+
                 </div>
                 <nav aria-label="Page navigation">
                     <div class="text-center">
@@ -132,5 +121,6 @@
 
         </div>
     </div>
+
 
 {% endblock %}

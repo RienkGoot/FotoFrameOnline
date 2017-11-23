@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category
@@ -36,6 +37,15 @@ class Category
 
     /**
      * @var string
+     * @Assert\File(
+     *      mimeTypesMessage = "U kunt alleen .png, .jpeg, .jpg en .gif uploaden.",
+     *      mimeTypes = {
+     *          "image/png",
+     *          "image/jpeg",
+     *          "image/jpg",
+     *          "image/gif"
+     *      }
+     * )
      *
      * @ORM\Column(name="image_name", type="string", length=50)
      */

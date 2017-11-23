@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Frame
@@ -16,11 +17,11 @@ class Frame
     /**
      * @ORM\ManyToMany(targetEntity="Subcategory", mappedBy="frame")
      */
-    private $frame;
+    private $subcategory;
 
     public function __construct()
     {
-        $this->frame = new ArrayCollection();
+        $this->subcategory = new ArrayCollection();
     }
 
     /**
@@ -41,6 +42,15 @@ class Frame
 
     /**
      * @var string
+     * @Assert\File(
+     *      mimeTypesMessage = "U kunt alleen .png, .jpeg, .jpg en .gif uploaden.",
+     *      mimeTypes = {
+     *          "image/png",
+     *          "image/jpeg",
+     *          "image/jpg",
+     *          "image/gif"
+     *      }
+     * )
      *
      * @ORM\Column(name="imageName", type="string", length=50)
      */
@@ -106,36 +116,36 @@ class Frame
     }
 
     /**
-     * Add frame
+     * Add subcategory
      *
-     * @param \AppBundle\Entity\Subcategory $frame
+     * @param \AppBundle\Entity\Subcategory $subcategory
      *
-     * @return Frame
+     * @return Subcategory
      */
-    public function addFrame(\AppBundle\Entity\Subcategory $frame)
+    public function addSubcategory(\AppBundle\Entity\Subcategory $subcategory)
     {
-        $this->frame[] = $frame;
+        $this->subcategory[] = $subcategory;
 
         return $this;
     }
 
     /**
-     * Remove frame
+     * Remove subcategory
      *
-     * @param \AppBundle\Entity\Subcategory $frame
+     * @param \AppBundle\Entity\Subcategory $subcategory
      */
-    public function removeFrame(\AppBundle\Entity\Subcategory $frame)
+    public function removeSubcategory(\AppBundle\Entity\Subcategory $subcategory)
     {
-        $this->frame->removeElement($frame);
+        $this->subcategory->removeElement($subcategory);
     }
 
     /**
-     * Get frame
+     * Get subcategory
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getFrame()
+    public function getSubcategory()
     {
-        return $this->frame;
+        return $this->subcategory;
     }
 }

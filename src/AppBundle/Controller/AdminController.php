@@ -18,7 +18,7 @@ class AdminController extends Controller
 {
     /**
      * @Route("/admin/category", name="admin_category")
-     * @Security("has_role('ROLE_ADMIN')")
+     *
      */
     public function indexCategoryAction(Request $request)
     {
