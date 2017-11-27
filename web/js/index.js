@@ -11,3 +11,29 @@ $(function () {
         $('.search-input').focus();
     });
 });
+
+$(document).ready(function(){
+    $(".chosen-select").chosen({
+        placeholder_text_multiple: "Selecteer de onderdelen",
+        no_results_text: "Niks gevonden..",
+        width: "40%"
+    })
+});
+
+$(function(){
+
+    $("#target").keyup(function(){
+
+        var searchText = $(this).val();
+
+        $('ul > li').each(function(){
+
+            var currentLiText = $(this).text(),
+                showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+
+            $(this).toggle(showCurrentLi);
+
+        });
+    });
+
+});

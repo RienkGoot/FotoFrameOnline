@@ -30,8 +30,10 @@ class CategoryType extends AbstractType
 
                 // use the User.username property as the visible option string
                 'choice_label' => 'name',
+                'required' => false,
                 'label' => 'Onderdelen',
                 'multiple' => true,
+                'attr'=>array('class'=>'chosen-select')
             ))
             ->add('save', SubmitType::class, ['label' => 'Opslaan']);
     }
