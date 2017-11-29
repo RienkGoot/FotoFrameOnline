@@ -28,4 +28,4 @@ security:
             security: false
     access_control:
             # require ROLE_ADMIN for /admin*
-            - { path: ^/admin, roles: ROLE_ADMIN }
+            - { path: ^/beheer, roles: ROLE_ADMIN }

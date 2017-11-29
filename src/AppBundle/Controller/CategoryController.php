@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class CategoryController
@@ -21,6 +22,23 @@ class CategoryController extends Controller
     public function indexAction(Request $request)
     {
         $categories = $this->getDoctrine()->getRepository('AppBundle:Category')->findAll();
+
+        $handle=fopen("counter.txt", "w+"); //r denotes for read the file
+        $counter=(int) fread($handle, 20);  // Second Parameter is the length of visitor count
+        fclose($handle);
+        $counter++;
+
+        // set and get session attributes
+        $session = new Session();
+        $session->set('counter', $counter);
+        $counter = $session->get('counter');
+
+
+        $handle= fopen("counter.txt", "w"); //re-open the file for update the count
+        fwrite($handle, $counter);
+        fclose($handle);
+
+
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -53,8 +71,8 @@ class CategoryController extends Controller
         $categories = $query->getResult();
 
         return $this->render('default/subcategory.html.twig',array(
-        'categories' => $categories,
-        'categoriesmenu' => $catmenu )
+                'categories' => $categories,
+                'categoriesmenu' => $catmenu )
         );
     }
 
@@ -76,8 +94,8 @@ class CategoryController extends Controller
         $subcategories = $query->getResult();
 
         return $this->render('default/frames.html.twig',array(
-            'subcategories' => $subcategories,
-            'categoriesmenu' => $catmenu )
+                'subcategories' => $subcategories,
+                'categoriesmenu' => $catmenu )
         );
     }
 

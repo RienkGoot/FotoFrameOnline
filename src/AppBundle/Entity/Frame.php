@@ -47,6 +47,52 @@ class Frame
      */
     private $imageName;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imageWidth", type="string", length=50)
+     */
+    private $imageWidth;
+
+    /**
+     * @return string
+     */
+    public function getImageWidth()
+    {
+        return $this->imageWidth;
+    }
+
+    /**
+     * @param string $imageWidth
+     */
+    public function setImageWidth($imageWidth)
+    {
+        $this->imageWidth = $imageWidth;
+    }
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imageHeight", type="string", length=50)
+     */
+    private $imageHeight;
+
+    /**
+     * @return string
+     */
+    public function getImageHeight()
+    {
+        return $this->imageHeight;
+    }
+
+    /**
+     * @param string $imageHeight
+     */
+    public function setImageHeight($imageHeight)
+    {
+        $this->imageHeight = $imageHeight;
+    }
+
 
     /**
      * Get id

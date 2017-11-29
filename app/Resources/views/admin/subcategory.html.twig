@@ -31,6 +31,14 @@
                         {% endfor %}
                         </tbody>
                     </table>
+
+                    <nav aria-label="Page navigation">
+                        <div class="text-center">
+                            <ul class="pagination">
+                                {{ knp_pagination_render(subcategories) }}
+                            </ul>
+                        </div>
+                    </nav>
                 </div>
 
             </div>

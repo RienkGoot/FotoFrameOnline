@@ -9,7 +9,6 @@ use AppBundle\Form\Type\CategoryType;
 use AppBundle\Form\Type\FrameType;
 use AppBundle\Form\Type\SubcategoryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,20 +16,35 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminController extends Controller
 {
     /**
-     * @Route("/admin/category", name="admin_category")
-     *
+     * @Route("/beheer/categorie", name="admin_category")
+     * Load all categories and pass them to paginator.
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexCategoryAction(Request $request)
     {
+        // Findall in entity Category.
         $categories = $this->getDoctrine()->getRepository('AppBundle:Category')->findAll();
 
+        //KNP Paginator.
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $categories,
+            $request->query->getInt('page', 1), // page number
+            10  // limit per page
+        );
+
         return $this->render('admin/category.html.twig', array(
-            'categories' => $categories
+            'categories' => $pagination
+
         ));
     }
 
     /**
-     * @Route("/admin/category/new", name="admin_category_new")
+     * @Route("/beheer/categorie/nieuw", name="admin_category_new")
+     * Create a new Category with data from the form CategoryType.
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function CreateCategoryAction(Request $request)
     {
@@ -38,17 +52,21 @@ class AdminController extends Controller
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
+        // Check if the form is submitted & valid.
         if ($form->isSubmitted() && $form->isValid()) {
             /**
              * @var UploadedFile $file
              */
+            // Changing the image name with md5.
             $file=$category->getImageName();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
+            // Move the file into directory.
             $file->move(
               $this->getParameter('image_directory'),$fileName
             );
 
+            // Saving the new category.
             $category->setImageName($fileName);
             $em=$this->getDoctrine()->getManager();
             $em->persist($category);
@@ -63,22 +81,23 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/category/delete/{id}", name="category_delete")
-     *
-     * Delete category by id.
+     * @Route("/beheer/categorie/verwijderen/{id}", name="category_delete")
+     * Delete the category by id.
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteCategoryAction($id)
     {
+        // Find id in entity Category
         $em = $this->getDoctrine()->getManager();
-
         $categories = $em->getRepository('AppBundle:Category')->find($id);
 
+        // If categories doesn't exist redirect them back.
         if (!$categories) {
             return $this->redirectToRoute('admin_category');
         }
 
+        // Delete and save.
         $em->remove($categories);
         $em->flush();
 
@@ -86,9 +105,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/category/edit/{id}", name="category_edit")
-     *
-     * Handles the edit request.
+     * @Route("/beheer/categorie/bijwerken/{id}", name="category_edit")
+     * Edit the category by id.
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -97,20 +115,22 @@ class AdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('AppBundle:Category')->find($id);
-
         $form = $this->createForm(CategoryType::class, $categories);
-
         $form->handleRequest($request);
 
+        // Check if the form is submitted & valid.
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Changing the image name with md5.
             $file=$categories->getImageName();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
+            // Move the file into directory.
             $file->move(
                 $this->getParameter('image_directory'),$fileName
             );
 
+            // Saving the edited category.
             $categories->setImageName($fileName);
             $em->persist($categories);
             $em->flush();
@@ -124,19 +144,26 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/subcategory", name="admin_subcategory")
+     * @Route("/beheer/subcategorie", name="admin_subcategory")
      */
     public function indexSubcategoryAction(Request $request)
     {
         $subcategories = $this->getDoctrine()->getRepository('AppBundle:Subcategory')->findAll();
 
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $subcategories, /* query NOT result */
+            $request->query->getInt('page', 1), // page number
+            10  // limit per page
+        );
+
         return $this->render('admin/subcategory.html.twig', array(
-            'subcategories' => $subcategories
+            'subcategories' => $pagination
         ));
     }
 
     /**
-     * @Route("/admin/subcategory/new", name="admin_subcategory_new")
+     * @Route("/beheer/subcategorie/nieuw", name="admin_subcategory_new")
      */
     public function CreateSubcategoryAction(Request $request)
     {
@@ -169,7 +196,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/subcategory/delete/{id}", name="subcategory_delete")
+     * @Route("/beheer/subcategorie/verwijderen/{id}", name="subcategory_delete")
      *
      * Delete subcategory by id.
      * @param $id
@@ -192,7 +219,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/subcategory/edit/{id}", name="subcategory_edit")
+     * @Route("/beheer/subcategorie/bijwerken/{id}", name="subcategory_edit")
      *
      * Handles the edit request.
      * @param Request $request
@@ -230,30 +257,39 @@ class AdminController extends Controller
     }
 
     /**
-    * @Route("/login", name="login")
-    */
-    public function LoginAction(Request $request)
+     * @Route("/login", name="login")
+     * Loads the twig template for the login page.
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function LoginAction()
     {
-        // replace this example code with whatever you need
+       // Render twig template.
         return $this->render('admin/login.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
     }
 
     /**
-     * @Route("/admin/frame", name="admin_frame")
+     * @Route("/beheer/frame", name="admin_frame")
      */
     public function indexFrameAction(Request $request)
     {
         $frames = $this->getDoctrine()->getRepository('AppBundle:Frame')->findAll();
 
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $frames, /* query NOT result */
+            $request->query->getInt('page', 1), // page number
+            10  // limit per page
+        );
+
         return $this->render('admin/frame.html.twig', array(
-            'frames' => $frames
+            'frames' => $pagination
         ));
     }
 
     /**
-     * @Route("/admin/frame/new", name="admin_frame_new")
+     * @Route("/beheer/frame/nieuw", name="admin_frame_new")
      */
     public function newFrameAction(Request $request)
     {
@@ -265,7 +301,9 @@ class AdminController extends Controller
             /**
              * @var UploadedFile $file
              */
+
             $file=$frame->getImageName();
+            list($width, $height) = getimagesize($file);
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
             $file->move(
@@ -273,6 +311,8 @@ class AdminController extends Controller
             );
 
             $frame->setImageName($fileName);
+            $frame->setImageWidth($width);
+            $frame->setImageHeight($height);
             $em=$this->getDoctrine()->getManager();
             $em->persist($frame);
             $em->flush();
@@ -286,7 +326,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/frame/delete/{id}", name="frame_delete")
+     * @Route("/beheer/frame/verwijderen/{id}", name="frame_delete")
      *
      * Delete frame by id.
      * @param $id
@@ -309,7 +349,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/frame/edit/{id}", name="frame_edit")
+     * @Route("/beheer/frame/bijwerken/{id}", name="frame_edit")
      *
      * Handles the edit request.
      * @param Request $request
@@ -328,6 +368,7 @@ class AdminController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $file=$frames->getImageName();
+            list($width, $height) = getimagesize($file);
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
             $file->move(
@@ -335,6 +376,8 @@ class AdminController extends Controller
             );
 
             $frames->setImageName($fileName);
+            $frames->setImageWidth($width);
+            $frames->setImageHeight($height);
             $em->persist($frames);
             $em->flush();
 

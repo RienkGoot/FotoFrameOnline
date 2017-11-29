@@ -3,7 +3,6 @@
 
 {% block body %}
     {% include 'adminsidebar.html.twig' %}
-
     <div class="col-md-10 ">
         <div class="panel  panel-primary">
             <div class="panel-heading text-center">
@@ -32,6 +31,13 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <nav aria-label="Page navigation">
+                    <div class="text-center">
+                        <ul class="pagination">
+                            {{ knp_pagination_render(categories) }}
+                        </ul>
+                    </div>
+                </nav>
             </div>
         </div>
     </div>

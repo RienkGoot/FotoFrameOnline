@@ -1,85 +1,69 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" ></script>
-    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
-    <div class="row">
-        <div class="col-md-3" style="margin-left: 19px;">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.20/fabric.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    {% for frame in frames %}
+
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-primary" >
                 <div class="panel-heading">
-                    <h3 class="panel-title">Eigenschappen</h3>
+                    <div class="panel-title pull-left">
+                        <input type="file" id="imageLoader" name="imageLoader" />
+                    </div>
+                    <div class="pull-right"> <a href="#" id="imageSaver" class="btn btn-default"><span class="glyphicon glyphicon-save"></span> Opslaan</a></div>
+                    <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal">
-                        <fieldset>
-                            <!-- File Button -->
-                            <div class="form-group">
-                                <label class="col-md-2 control-label" for="filebutton"></label>
-                                <div class="col-md-2">
-                                    <input id="filebutton" name="filebutton" class="input-file" type="file"><br>
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-default">Toevoegen</button>
-                                </div>
-                            </div>
-                            <br><br><br>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label" for="singlebutton"></label>
-                                <div class="col-md-2">
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Opslaan op computer</button>
-                                </div>
-                            </div>
-
-                        </fieldset>
-                    </form>
-                    <button onclick="rotateFoo()" class="btn btn-default">Roteren</button>
+                    <canvas id="imageCanvas" width="1200px" height="600px"></canvas>
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Geselecteerde frame</h3>
-                </div>
-                <div class="panel-body">
-                    <div style="position: relative;">
-                    {% for frame in frames %}
 
-                        <img style="position: relative;" class="center-block img-responsive" src="{{ asset('uploads/' ~ frame.imageName) }}" >
-                    {% endfor %}
+        <script>
+            var canvas = new fabric.Canvas('imageCanvas', {
+                backgroundColor: 'rgb(255,255,255)'
+            });
 
-                    {#<img class="res center-block" src="{{ asset('images/Afbeelding1.png') }}">#}
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            fabric.Image.fromURL('{{ asset('uploads/' ~ frame.imageName ) }}', function(myImg) {
+                var img1 = myImg.set({ left: 350, top: 0 ,width:{{ frame.imageWidth }},height:{{ frame.imageHeight}}    });
+                canvas.add(img1);
+            });
 
-    <div id="draggableHelper" style="display:inline-block">
-        <img id="uploadPreview" style="width: 500px; height: 500px;"  />
-    </div>
-    <input id="uploadImage" type="file" name="myPhoto" onchange="PreviewImage();"  accept="image/*"/>
-    <script type="text/javascript">
 
-        function PreviewImage() {
-            var oFReader = new FileReader();
-            oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+            var imageLoader = document.getElementById('imageLoader');
+            imageLoader.addEventListener('change', handleImage, false);
 
-            oFReader.onload = function (oFREvent) {
-                document.getElementById("uploadPreview").src = oFREvent.target.result;
-            };
-        };
+            function handleImage(e) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    var img = new Image();
+                    img.onload = function () {
+                        var imgInstance = new fabric.Image(img, {
+                            scaleX: 0.2,
+                            scaleY: 0.2
+                        })
+                        canvas.add(imgInstance);
+                    }
+                    img.src = event.target.result;
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
 
-        $( "#draggableHelper" ).draggable({ cursor: "move"});
-        $('#uploadPreview').resizable();
+            var imageSaver = document.getElementById('imageSaver');
+            imageSaver.addEventListener('click', saveImage, false);
 
-        function rotateFoo(){
-            var angle = ($('#uploadPreview').data('angle') + 90) || 90;
-            $('#uploadPreview').css({'transform': 'rotate(' + angle + 'deg)'});
-            $('#uploadPreview').data('angle', angle);
-        }
-    </script>
+            function saveImage(e) {
+                this.href = canvas.toDataURL({
+                    format: 'jpeg',
+                    quality: 1.0
+                });
+                this.download = '{{ frame.name }}.png'
+            }
+        </script>
 
-   {# <div style=" position: relative;">
-        <img style="position: relative;" class="center-block img-responsive" src="{{ asset('images/Afbeelding4.png') }}" >
-    </div>#}
+    {% endfor %}
+
 {% endblock %}
