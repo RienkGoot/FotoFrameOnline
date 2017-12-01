@@ -1,6 +1,5 @@
 {% extends 'adminbase.html.twig' %}
 
-
 {% block body %}
     {% include 'adminsidebar.html.twig' %}
     <div class="col-md-10 ">
@@ -21,16 +20,18 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <!-- Load categories -->
                     {% for category in categories %}
                         <tr>
                             <td>{{ category.name }}</td>
                             <td><img width="70px" src="{{ asset('uploads/' ~ category.imageName) }}"></td>
-                            <td>{% for subcategory in category.subcategory %} -{{ subcategory.name }}<br> {% endfor %}</td>
+                            <td>{% for subcategory in category.subcategory %} - {{ subcategory.name }}<br> {% endfor %}</td>
                             <td class="text-center"><a class='btn btn-info btn-xs' href="{{ path('category_edit', {'id': category.id}) }}"><span class="glyphicon glyphicon-edit"></span> Bijwerken</a> <a href="{{ path('category_delete', {'id': category.id}) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Verwijderen</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
+                <!-- Paginator -->
                 <nav aria-label="Page navigation">
                     <div class="text-center">
                         <ul class="pagination">

@@ -1,22 +1,19 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}MyPhotoFrameOnline.com - Frames{% endblock %}
 {% block body %}
+
     <div class="container-fluid main-container">
         <div class="col-md-2 sidebar">
             <div class="row">
-                <!-- uncomment code for absolute positioning tweek see top comment in css -->
-                <div class="absolute-wrapper"> </div>
-                <!-- Menu -->
-
+                <!-- Sidebar menu -->
                 <div class="side-menu">
-                    <nav class="navbar navbar-default" role="navigation" style="border: 1px solid #3071aa;border-radius: 4px;">
-                        <!-- Main Menu -->
+                    <nav class="navbar navbar-default" role="navigation">
                         <div class="side-menu-container">
                             <ul class="nav navbar-nav"  id="myUL" >
                                 {% for category in categoriesmenu %}
                                     <li class="panel panel-default" id="dropdown">
                                         <a data-toggle="collapse" href="#dropdown-lvl{{ category.id }}">
-                                            <span class="glyphicon glyphicon-chevron-right"></span> {{ category.name }}{# <span class="caret"></span>#}
+                                            <span class="glyphicon glyphicon-chevron-right"></span> {{ category.name }}
                                         </a>
 
                                         <!-- Dropdown level 1 -->
@@ -25,7 +22,7 @@
                                                 <ul class="nav navbar-nav">
                                                     {% for subcategory in category.subcategory %}
                                                         <li><a href="{{ path('subcategory_frame', {'id': subcategory.id}) }}">{{ subcategory.name }}</a></li>
-                                                   {% endfor %}
+                                                    {% endfor %}
                                                 </ul>
                                             </div>
                                         </div>
@@ -34,19 +31,21 @@
                             </ul>
                         </div>
                     </nav>
-
                 </div>
-            </div>  		</div>
+            </div>
+        </div>
+
+        <!-- Frames Display -->
         <div class="col-md-10 ">
             <div class="panel  panel-primary">
                 <div class="panel-heading text-center">
                     Frames
                 </div>
                 <div class="panel-body">
-
-                    {% for subcategory in subcategories %}
+                    <div class="col-md-12">
+                        {% for subcategory in subcategories %}
                         {% for frame in subcategory.frame %}
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" style="height: 443px;">
                                 <div class="thumbnail">
                                     <a href="{{ path('frames_frame', {'id': frame.id}) }}">
                                         <img id="myImage" src="{{ asset('uploads/' ~ frame.imageName) }}" >
@@ -57,10 +56,11 @@
                                 </div>
                             </div>
                         {% endfor %}
+                    </div>
                     {% endfor %}
-
-
                 </div>
+
+                <!-- Pagination -->
                 <nav aria-label="Page navigation">
                     <div class="text-center">
                         <ul class="pagination">
@@ -72,6 +72,4 @@
             </div>
         </div>
     </div>
-
-
 {% endblock %}

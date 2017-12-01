@@ -11,11 +11,13 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Class FormType
+ * Create the contact form.
  * @package AppBundle\Form\Type;
  */
 class ContactType extends AbstractType
 {
     /**
+     * Build the contact form.
      * @param FormBuilderInterface $builder
      * @param array $options
      */

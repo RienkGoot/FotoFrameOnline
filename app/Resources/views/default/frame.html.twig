@@ -1,69 +1,45 @@
 {% extends 'base.html.twig' %}
+{% block title %}MyPhotoFrameOnline.com - Frame uploaden{% endblock %}
 
 {% block body %}
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.20/fabric.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
-    {% for frame in frames %}
 
+    {% for frame in frames %}
+        <!-- Frame panel -->
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-primary" >
                 <div class="panel-heading">
                     <div class="panel-title pull-left">
-                        <input type="file" id="imageLoader" name="imageLoader" />
+                        <input type="file" id="imageLoader" name="imageLoader" accept="image/*"  />
                     </div>
                     <div class="pull-right"> <a href="#" id="imageSaver" class="btn btn-default"><span class="glyphicon glyphicon-save"></span> Opslaan</a></div>
+                    <div class="pull-right" style="margin-right: 10px;"> <a href="#" id="remove" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Verwijderen</a></div>
                     <div class="clearfix"></div>
                 </div>
+                <!-- Panel body with canvas -->
                 <div class="panel-body">
-                    <canvas id="imageCanvas" width="1200px" height="600px"></canvas>
+                    <canvas id="imageCanvas" width="{{  frame.imageWidth + 50 }}px" height="{{ frame.imageHeight + 50}}px" style="border: 1px solid #e7e7e7;"></canvas>
                 </div>
             </div>
         </div>
 
+        <!-- Load JS with twig -->
         <script>
-            var canvas = new fabric.Canvas('imageCanvas', {
-                backgroundColor: 'rgb(255,255,255)'
-            });
-
+            // Load image from URL
             fabric.Image.fromURL('{{ asset('uploads/' ~ frame.imageName ) }}', function(myImg) {
-                var img1 = myImg.set({ left: 350, top: 0 ,width:{{ frame.imageWidth }},height:{{ frame.imageHeight}}    });
+                var img1 = myImg.set({ left: 25, top: 25 ,width:{{ frame.imageWidth }},height:{{ frame.imageHeight}}    });
                 canvas.add(img1);
             });
 
-
-            var imageLoader = document.getElementById('imageLoader');
-            imageLoader.addEventListener('change', handleImage, false);
-
-            function handleImage(e) {
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                    var img = new Image();
-                    img.onload = function () {
-                        var imgInstance = new fabric.Image(img, {
-                            scaleX: 0.2,
-                            scaleY: 0.2
-                        })
-                        canvas.add(imgInstance);
-                    }
-                    img.src = event.target.result;
-                }
-                reader.readAsDataURL(e.target.files[0]);
-            }
-
-            var imageSaver = document.getElementById('imageSaver');
-            imageSaver.addEventListener('click', saveImage, false);
-
+            // Save image and download
             function saveImage(e) {
                 this.href = canvas.toDataURL({
                     format: 'jpeg',
                     quality: 1.0
                 });
-                this.download = '{{ frame.name }}.png'
-            }
+                this.download = '{{ frame.name }}.png'}
         </script>
-
     {% endfor %}
 
 {% endblock %}

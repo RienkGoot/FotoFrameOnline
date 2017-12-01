@@ -11,11 +11,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class FormType
+ * Create subcategory form.
  * @package AppBundle\Form\Type;
  */
 class SubcategoryType extends AbstractType
 {
     /**
+     * Build the subcategory form.
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -25,10 +27,7 @@ class SubcategoryType extends AbstractType
             ->add('name', TextType::class, ['label' => 'Naam:', 'required' => true])
             ->add('imageName', FileType::class, ['label' => 'Afbeelding:', 'required' => false,'data_class' => null])
             ->add('frame', EntityType::class, array(
-                // query choices from this entity
                 'class' => 'AppBundle\Entity\Frame',
-
-                // use the User.username property as the visible option string
                 'choice_label' => 'name',
                 'required' => false,
                 'label' => 'Onderdelen',
@@ -38,6 +37,10 @@ class SubcategoryType extends AbstractType
             ->add('save', SubmitType::class, ['label' => 'Opslaan']);
     }
 
+    /**
+     * Use entity Subcategory
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

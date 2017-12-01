@@ -1,12 +1,8 @@
 <div class="col-md-2 sidebar">
     <div class="row">
-        <!-- uncomment code for absolute positioning tweek see top comment in css -->
-        <div class="absolute-wrapper"> </div>
-        <!-- Menu -->
-
+        <!-- Sidebar Menu -->
         <div class="side-menu">
-            <nav class="navbar navbar-default" role="navigation" style="border: 1px solid #3071aa;border-radius: 4px;">
-                <!-- Main Menu -->
+            <nav class="navbar navbar-default" role="navigation">
                 <div class="side-menu-container">
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url('admin_category') }}"><span class="glyphicon glyphicon-folder-open"></span> Categorieën</a></li>
@@ -15,9 +11,8 @@
                         <li><a><span class="glyphicon glyphicon-user"></span> Bezoekers: <span class="label label-default">{{ app.session.get('counter') }}</span></a></li>
                         <li><a href="{{ url('logout') }}" ><span class="glyphicon glyphicon-log-out"></span> Uitloggen </a></li>
                     </ul>
-                </div><!-- /.navbar-collapse -->
+                </div>
             </nav>
-
         </div>
     </div>
 </div>

@@ -1,48 +1,45 @@
 {% extends 'adminbase.html.twig' %}
 
-
 {% block body %}
     {% include 'adminsidebar.html.twig' %}
-        <div class="col-md-10 ">
-            <div class="panel  panel-primary">
-                <div class="panel-heading text-center">
-                    Subcategorieën
-                    <a href="{{ url('admin_subcategory_new') }}" class="btn btn-default btn-xs pull-right" role="button">Nieuwe subcategorie</a>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="panel-body">
-                    <table class="table table-striped">
-                        <thead>
+    <div class="col-md-10 ">
+        <div class="panel  panel-primary">
+            <div class="panel-heading text-center">
+                Subcategorieën
+                <a href="{{ url('admin_subcategory_new') }}" class="btn btn-default btn-xs pull-right" role="button">Nieuwe subcategorie</a>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Subcategorie afbeelding</th>
+                        <th>Gekoppeld aan</th>
+                        <th class="text-center">Acties</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Load subcategories -->
+                    {% for subcategory in subcategories %}
                         <tr>
-                            <th>Naam</th>
-                            <th>Subcategorie afbeelding</th>
-                            <th>Gekoppeld aan</th>
-                            <th class="text-center">Acties</th>
+                            <td>{{ subcategory.name }}</td>
+                            <td><img width="70px" src="{{ asset('uploads/' ~ subcategory.imageName) }}"></td>
+                            <td>{% for frame in subcategory.frame %} -{{ frame.name }}<br> {% endfor %}</td>
+                            <td class="text-center"><a class='btn btn-info btn-xs' href="{{ path('subcategory_edit', {'id': subcategory.id}) }}"><span class="glyphicon glyphicon-edit"></span> Bijwerken</a> <a href="{{ path('subcategory_delete', {'id': subcategory.id}) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Verwijderen</a></td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for subcategory in subcategories %}
-                            <tr>
-                                <td>{{ subcategory.name }}</td>
-                                <td><img width="70px" src="{{ asset('uploads/' ~ subcategory.imageName) }}"></td>
-                                <td>{% for frame in subcategory.frame %} -{{ frame.name }}<br> {% endfor %}</td>
-                                <td class="text-center"><a class='btn btn-info btn-xs' href="{{ path('subcategory_edit', {'id': subcategory.id}) }}"><span class="glyphicon glyphicon-edit"></span> Bijwerken</a> <a href="{{ path('subcategory_delete', {'id': subcategory.id}) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Verwijderen</a></td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-
-                    <nav aria-label="Page navigation">
-                        <div class="text-center">
-                            <ul class="pagination">
-                                {{ knp_pagination_render(subcategories) }}
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <!-- Paginator -->
+                <nav aria-label="Page navigation">
+                    <div class="text-center">
+                        <ul class="pagination">
+                            {{ knp_pagination_render(subcategories) }}
+                        </ul>
+                    </div>
+                </nav>
             </div>
         </div>
-
-
+    </div>
 {% endblock %}

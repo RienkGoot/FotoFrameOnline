@@ -2,12 +2,12 @@
 
 {% block body %}
     {% include 'adminsidebar.html.twig' %}
-
         <div class="col-md-10 ">
             <div class="panel  panel-primary">
                 <div class="panel-heading text-center">
                     Subcategorie toevoegen
                 </div>
+                <!-- Subcategory form -->
                 <div class="panel-body">
                     {{ form_start(subcategory) }}
                     {{ form_widget(subcategory) }}
@@ -15,5 +15,4 @@
                 </div>
             </div>
         </div>
-
 {% endblock %}

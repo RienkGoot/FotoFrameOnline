@@ -10,11 +10,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class FormType
+ * Create frame form.
  * @package AppBundle\Form\Type;
  */
 class FrameType extends AbstractType
 {
     /**
+     * Build the frame form.
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -26,6 +28,10 @@ class FrameType extends AbstractType
             ->add('save', SubmitType::class, ['label' => 'Opslaan']);
     }
 
+    /**
+     * Use entity Frame.
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

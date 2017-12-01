@@ -19,6 +19,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <!-- Load frames -->
                     {% for frame in frames %}
                         <tr>
                             <td>{{ frame.name }}</td>
@@ -28,6 +29,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <!-- Paginator -->
                 <nav aria-label="Page navigation">
                     <div class="text-center">
                         <ul class="pagination">

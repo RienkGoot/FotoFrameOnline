@@ -11,11 +11,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class FormType
+ * Create category form.
  * @package AppBundle\Form\Type;
  */
 class CategoryType extends AbstractType
 {
     /**
+     * Build the category form.
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -27,8 +29,6 @@ class CategoryType extends AbstractType
             ->add('subcategory', EntityType::class, array(
                 // query choices from this entity
                 'class' => 'AppBundle\Entity\Subcategory',
-
-                // use the User.username property as the visible option string
                 'choice_label' => 'name',
                 'required' => false,
                 'label' => 'Onderdelen',
@@ -38,6 +38,10 @@ class CategoryType extends AbstractType
             ->add('save', SubmitType::class, ['label' => 'Opslaan']);
     }
 
+    /**
+     * Use entity Category.
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
