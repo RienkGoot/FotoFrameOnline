@@ -70,3 +70,8 @@ $('#remove').click(function(){
     }
     canvas.remove(object);
 });
+
+// Google Translator
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'nl', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}

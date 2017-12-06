@@ -40,6 +40,7 @@ class ComposerStaticInit92179a653bd71da80382461e217b351a
             'Symfony\\Bridge\\PhpUnit\\' => 23,
             'Symfony\\Bridge\\Monolog\\' => 23,
             'Symfony\\Bridge\\Doctrine\\' => 24,
+            'Snilius\\Twig\\' => 13,
             'Sensio\\Bundle\\GeneratorBundle\\' => 30,
             'Sensio\\Bundle\\FrameworkExtraBundle\\' => 35,
             'Sensio\\Bundle\\DistributionBundle\\' => 33,
@@ -150,6 +151,10 @@ class ComposerStaticInit92179a653bd71da80382461e217b351a
         'Symfony\\Bridge\\Doctrine\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/symfony/src/Symfony/Bridge/Doctrine',
+        ),
+        'Snilius\\Twig\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/snilius/twig-sort-by-field/src',
         ),
         'Sensio\\Bundle\\GeneratorBundle\\' => 
         array (

@@ -19,7 +19,7 @@
                 </div>
                 <!-- Panel body with canvas -->
                 <div class="panel-body">
-                    <canvas id="imageCanvas" width="{{  frame.imageWidth + 50 }}px" height="{{ frame.imageHeight + 50}}px" style="border: 1px solid #e7e7e7;"></canvas>
+                    <canvas id="imageCanvas" width="{{  frame.imageWidth + 30 }}px" height="{{ frame.imageHeight + 30}}px" style="border: 1px solid #e7e7e7;"></canvas>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
         <script>
             // Load image from URL
             fabric.Image.fromURL('{{ asset('uploads/' ~ frame.imageName ) }}', function(myImg) {
-                var img1 = myImg.set({ left: 25, top: 25 ,width:{{ frame.imageWidth }},height:{{ frame.imageHeight}}    });
+                var img1 = myImg.set({ left: 15, top: 15 ,width:{{ frame.imageWidth }},height:{{ frame.imageHeight}}    });
                 canvas.add(img1);
             });
 

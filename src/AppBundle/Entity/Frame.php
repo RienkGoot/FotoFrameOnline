@@ -43,14 +43,14 @@ class Frame
     /**
      * @var string
      *
-     * @ORM\Column(name="imageName", type="string", length=50)
+     * @ORM\Column(name="image_name", type="string", length=50)
      */
     private $imageName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="imageWidth", type="string", length=50)
+     * @ORM\Column(name="image_width", type="string", length=50)
      */
     private $imageWidth;
 
@@ -73,7 +73,7 @@ class Frame
     /**
      * @var string
      *
-     * @ORM\Column(name="imageHeight", type="string", length=50)
+     * @ORM\Column(name="image_height", type="string", length=50)
      */
     private $imageHeight;
 

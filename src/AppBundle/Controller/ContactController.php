@@ -32,7 +32,7 @@ class ContactController extends Controller
             // Create new swiftmailer message
             $message = (new \Swift_Message($form->getData()['subject']))
                 ->setFrom($form->getData()['email'])
-                ->setTo('lubujeku@tinoza.org')
+                ->setTo('rienkgoot@gmail.com')
                 ->setBody(
                     $this->renderView(
                         'email/contact.html.twig',
@@ -43,6 +43,7 @@ class ContactController extends Controller
 
             $this->get('mailer')->send($message);
             $this->addFlash('success', 'Mail verzonden.');
+            return $this->redirectToRoute('contact');
         }
 
         return $this->render('default/contact.html.twig', [

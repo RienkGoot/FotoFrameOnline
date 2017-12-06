@@ -51,7 +51,7 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function CreateCategoryAction(Request $request)
+    public function createCategoryAction(Request $request)
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -272,19 +272,6 @@ class AdminController extends Controller
 
         return $this->render('admin/subcategorynew.html.twig', [
             'subcategory' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/login", name="login")
-     * Loads the twig template for the login page.
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function LoginAction()
-    {
-       // Render twig template.
-        return $this->render('admin/login.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
     }
 

@@ -59,7 +59,7 @@ class Subcategory
      *      }
      * )
      *
-     * @ORM\Column(name="imageName", type="string", length=50)
+     * @ORM\Column(name="image_name", type="string", length=50)
      */
     private $imageName;
 

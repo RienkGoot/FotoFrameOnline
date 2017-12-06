@@ -24,7 +24,7 @@ class FrameType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Naam:', 'required' => true])
-            ->add('imageName', FileType::class, ['label' => 'Afbeelding:', 'required' => false,'data_class' => null])
+            ->add('imageName', FileType::class, ['label' => 'Afbeelding:', 'required' => true,'data_class' => null])
             ->add('save', SubmitType::class, ['label' => 'Opslaan']);
     }
 

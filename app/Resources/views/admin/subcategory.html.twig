@@ -25,7 +25,7 @@
                         <tr>
                             <td>{{ subcategory.name }}</td>
                             <td><img width="70px" src="{{ asset('uploads/' ~ subcategory.imageName) }}"></td>
-                            <td>{% for frame in subcategory.frame %} -{{ frame.name }}<br> {% endfor %}</td>
+                            <td>{% for frame in subcategory.frame %} - {{ frame.name }}<br> {% endfor %}</td>
                             <td class="text-center"><a class='btn btn-info btn-xs' href="{{ path('subcategory_edit', {'id': subcategory.id}) }}"><span class="glyphicon glyphicon-edit"></span> Bijwerken</a> <a href="{{ path('subcategory_delete', {'id': subcategory.id}) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Verwijderen</a></td>
                         </tr>
                     {% endfor %}
