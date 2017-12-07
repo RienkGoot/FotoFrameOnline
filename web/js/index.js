@@ -63,12 +63,10 @@ imageSaver.addEventListener('click', saveImage, false);
 
 // Remove selected object
 $('#remove').click(function(){
-    var object = canvas.getActiveObject();
-    if (!object){
-        alert('Selecteer een afbeelding om te verwijderen.');
-        return '';
-    }
-    canvas.remove(object);
+    canvas.getActiveObject().remove();
+    var $el = $('#imageLoader');
+    $el.wrap('<form>').closest('form').get(0).reset();
+    $el.unwrap();
 });
 
 // Google Translator

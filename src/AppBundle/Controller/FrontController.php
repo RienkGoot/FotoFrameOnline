@@ -59,9 +59,10 @@ class FrontController extends Controller
      * @Route("/subcategorie/{id}", name="category_subcategory")
      * Find all subcategories by id.
      * @param $id
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function CatAction($id)
+    public function CatAction($id, Request $request)
     {
         // Load categories for the sidebar menu.
         $catmenu = $this->getDoctrine()->getRepository('AppBundle:Category')->findAll();
@@ -75,8 +76,16 @@ class FrontController extends Controller
 
         $categories = $query->getResult();
 
+        // KNP Paginator
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $categories,
+            $request->query->getInt('page', 1),
+            8 // limit per page
+        );
+
         return $this->render('default/subcategory.html.twig',array(
-                'categories' => $categories,
+                'categories' => $pagination,
                 'categoriesmenu' => $catmenu )
         );
     }
@@ -85,9 +94,10 @@ class FrontController extends Controller
      * @Route("/frames/{id}", name="subcategory_frame")
      * Find all frames by id.
      * @param $id
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function SubAction($id)
+    public function SubAction($id, Request $request)
     {
         // Load categories for the sidebar menu.
         $catmenu = $this->getDoctrine()->getRepository('AppBundle:Category')->findAll();
@@ -101,8 +111,16 @@ class FrontController extends Controller
 
         $subcategories = $query->getResult();
 
+        // KNP Paginator
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $subcategories,
+            $request->query->getInt('page', 1),
+            8 // limit per page
+        );
+
         return $this->render('default/frames.html.twig',array(
-                'subcategories' => $subcategories,
+                'subcategories' => $pagination,
                 'categoriesmenu' => $catmenu )
         );
     }
