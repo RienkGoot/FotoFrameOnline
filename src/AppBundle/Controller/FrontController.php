@@ -25,21 +25,21 @@ class FrontController extends Controller
         // Load all from entity Category.
         $categories = $this->getDoctrine()->getRepository('AppBundle:Category')->findAll();
 
-        //Open .txt and read number.
-        $handle=fopen("counter.txt", "w+");
-        $counter=(int) fread($handle, 20);
-        fclose($handle);
-        $counter++;
+
+        //opens countlog.txt to read the number of hits
+        $datei = fopen("countlog.txt","r");
+        $count = fgets($datei,1000);
+        fclose($datei);
+        $count=$count + 1 ;
 
         // Set counter as session.
         $session = new Session();
-        $session->set('counter', $counter);
-        $counter = $session->get('counter');
+        $session->set('counter', $count);
 
-        // Re-open the file for update the count.
-        $handle= fopen("counter.txt", "w");
-        fwrite($handle, $counter);
-        fclose($handle);
+        // opens countlog.txt to change new hit number
+        $datei = fopen("countlog.txt","w");
+        fwrite($datei, $count);
+        fclose($datei);
 
         // KNP Paginator
         $paginator  = $this->get('knp_paginator');
