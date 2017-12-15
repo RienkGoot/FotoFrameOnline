@@ -36,7 +36,7 @@ $(function(){
 
 // Frame upload handling
 var canvas = new fabric.Canvas('imageCanvas', {
-    backgroundColor: 'rgb(255,255,255)'
+    backgroundColor: null
 });
 
 var imageLoader = document.getElementById('imageLoader');

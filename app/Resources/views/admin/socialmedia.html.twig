@@ -1,0 +1,37 @@
+{% extends 'adminbase.html.twig' %}
+
+{% block body %}
+    {% include 'adminsidebar.html.twig' %}
+    <div class="col-md-10 ">
+        <div class="panel  panel-primary">
+            <div class="panel-heading text-center">
+                Social Media
+                <a href="{{ url('social_new') }}" class="btn btn-default btn-xs pull-right" role="button">Nieuw</a>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>URL</th>
+                        <th>Afbeelding</th>
+                        <th class="text-center">Actie</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Load categories -->
+                     {% for social in socials %}
+                    <tr>
+                        <td>{{ social.name }}</td>
+                        <td>{{ social.url }}</td>
+                        <td><img width="20px" src="{{ asset('uploads/' ~ social.imageName) }}"></td>
+                        <td class="text-center"><a class='btn btn-info btn-xs' href="{{ path('social_edit', {'id': social.id}) }}"><span class="glyphicon glyphicon-edit"></span> Bijwerken</a> <a href="{{ path('social_delete', {'id': social.id}) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Verwijderen</a></td>
+                    </tr>
+                       {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

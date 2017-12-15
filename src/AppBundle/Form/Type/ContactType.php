@@ -2,8 +2,8 @@
 namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,7 +26,7 @@ class ContactType extends AbstractType
         $builder
             ->add('name', TextType::class, ['label' => 'Naam:', 'required' => true])
             ->add('email', EmailType::class, ['label' => 'Email:', 'required' => true])
-            ->add('telephone', IntegerType::class, ['label' => 'Telefoon:', 'required' => false])
+            ->add('telephone', TelType::class, ['label' => 'Telefoon:', 'required' => false])
             ->add('subject', TextType::class, ['label' => 'Onderwerp:', 'required' => false])
             ->add('message', TextareaType::class, ['label' => 'Bericht:', 'required' => true, 'attr' => ['rows' => '10']])
             ->add('save', SubmitType::class, ['label' => 'Versturen']);

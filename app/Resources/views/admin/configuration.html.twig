@@ -1,0 +1,47 @@
+{% extends 'adminbase.html.twig' %}
+
+{% block body %}
+    {% include 'adminsidebar.html.twig' %}
+    <div class="col-md-10 ">
+        <div class="panel  panel-primary">
+            <div class="panel-heading text-center">
+                Instellingen
+                <a href="{{ url('configuration_new') }}" class="btn btn-default btn-xs pull-right" role="button">Nieuw</a>
+                <a href="{{ url('configuration_new') }}" style="margin-right: 10px;" class="btn btn-default btn-xs pull-right" role="button">Aanpassen</a>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Logo</th>
+                        <th>Achtergrond</th>
+                        <th>Menu</th>
+                        <th>Menu tekst</th>
+                        <th>Paneel</th>
+                        <th>Paneel tekst</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Load categories -->
+                    {% for config in configuration %}
+                        <tr>
+                    {#        <td>{{ category.name }}</td>
+                            <td><img width="70px" src="{{ asset('uploads/' ~ category.imageName) }}"></td>#}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+              {#  <!-- Paginator -->
+                <nav aria-label="Page navigation">
+                    <div class="text-center">
+                        <ul class="pagination">
+                            {{ knp_pagination_render(categories) }}
+                        </ul>
+                    </div>
+                </nav>#}
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -47,7 +47,7 @@ class ContactController extends Controller
         }
 
         return $this->render('default/contact.html.twig', [
-            'contact' => $form->createView()
+            'contact' => $form->createView(),
         ]);
     }
 }

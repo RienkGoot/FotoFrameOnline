@@ -8,6 +8,19 @@
                         <li><a href="{{ url('admin_category') }}"><span class="glyphicon glyphicon-folder-open"></span> Categorieën</a></li>
                         <li><a href="{{ url('admin_subcategory') }}"><span class="glyphicon glyphicon-folder-open"></span> Subcategorieën</a></li>
                         <li><a href="{{ url('admin_frame') }}"><span class="glyphicon glyphicon-folder-open"></span> Frames</a></li>
+                        <li> <a data-toggle="collapse" href="#dropdown-lvl1">
+                            <span class="glyphicon glyphicon-cog"></span> Instellingen
+                        </a></li>
+
+                        <!-- Dropdown level 1 -->
+                        <div id="dropdown-lvl1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <ul class="nav navbar-nav">
+                                        <li><a href="{{ url('configuration') }}"><span class="glyphicon glyphicon-menu-right"></span> Kleuren</a></li>
+                                        <li><a href="{{ url('configuration_social') }}"><span class="glyphicon glyphicon-menu-right"></span> Social media</a></li>
+                                </ul>
+                            </div>
+                        </div>
                         <li><a><span class="glyphicon glyphicon-user"></span> Bezoekers: <span class="label label-default">{{ app.session.get('counter') }}</span></a></li>
                         <li><a href="{{ url('logout') }}" ><span class="glyphicon glyphicon-log-out"></span> Uitloggen </a></li>
                     </ul>

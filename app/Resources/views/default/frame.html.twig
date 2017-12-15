@@ -15,12 +15,87 @@
                     </div>
                     <div class="pull-right"> <a href="#" id="imageSaver" class="btn btn-default"><span class="glyphicon glyphicon-save"></span> Opslaan</a></div>
                     <div class="pull-right" style="margin-right: 10px;"> <a href="#" id="remove" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Verwijderen</a></div>
+                    <div class="pull-right" style="margin-right: 10px;"> <a data-toggle="modal" data-target="#helpModal" class="btn btn-default"><span class="glyphicon glyphicon-question-sign"></span> Help</a></div>
                     <div class="clearfix"></div>
                 </div>
                 <!-- Panel body with canvas -->
                 <div class="panel-body">
                     <canvas id="imageCanvas" width="{{  frame.imageWidth + 30 }}px" height="{{ frame.imageHeight + 30}}px" style="border: 1px solid #e7e7e7;"></canvas>
                 </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="helpModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Informatie</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                           Hoe krijg ik de geüploade foto achter de fotoframe?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        Klik op de fotoframe.
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                          Kan ik meerdere foto's uploaden?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                       Klik nogmaals op bestand kiezen.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingThree">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                          Hoe verwijder ik mijn foto?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                    <div class="panel-body">
+                                    Selecteer de foto en klik op de knop verwijderen.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Social Media -->
+        <div class="container" style="padding-bottom: 1%;">
+            <hr />
+            <div class="text-center center-block">
+                {% for social in socials %}
+                    <a href="{{ social.url }}" target="_blank"><img width="20px" src="{{ asset('uploads/' ~ social.imageName) }}"></a>
+                {% endfor %}
             </div>
         </div>
 

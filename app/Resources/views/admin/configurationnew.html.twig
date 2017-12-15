@@ -1,0 +1,18 @@
+{% extends 'adminbase.html.twig' %}
+
+{% block body %}
+    {% include 'adminsidebar.html.twig' %}
+    <div class="col-md-10 ">
+        <div class="panel  panel-primary">
+            <div class="panel-heading text-center">
+                Instellingen
+            </div>
+            <!-- Subcategory form -->
+            <div class="panel-body">
+                {{ form_start(configuration) }}
+                {{ form_widget(configuration) }}
+                {{ form_end(configuration) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
