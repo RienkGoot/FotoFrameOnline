@@ -2,7 +2,7 @@
 {% block title %}MyPhotoFrameOnline.com - Frame uploaden{% endblock %}
 
 {% block body %}
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.20/fabric.js"></script>
 
     {% for frame in frames %}
@@ -20,7 +20,7 @@
                 </div>
                 <!-- Panel body with canvas -->
                 <div class="panel-body">
-                    <canvas id="imageCanvas" width="{{  frame.imageWidth + 30 }}px" height="{{ frame.imageHeight + 30}}px" style="border: 1px solid #e7e7e7;"></canvas>
+                    <canvas id="imageCanvas" width="{{  frame.imageWidth + 50 }}px" height="{{ frame.imageHeight + 50}}px" style="border: 1px solid #e7e7e7;"></canvas>
                 </div>
             </div>
         </div>
@@ -91,7 +91,6 @@
 
         <!-- Social Media -->
         <div class="container" style="padding-bottom: 1%;">
-            <hr />
             <div class="text-center center-block">
                 {% for social in socials %}
                     <a href="{{ social.url }}" target="_blank"><img width="20px" src="{{ asset('uploads/' ~ social.imageName) }}"></a>
@@ -101,19 +100,69 @@
 
         <!-- Load JS with twig -->
         <script>
+
+            // Frame upload handling
+            var canvas = new fabric.Canvas('imageCanvas', {
+                backgroundColor: 'rgba(255,255,255,0)'
+            });
+
+            var imageLoader = document.getElementById('imageLoader');
+            imageLoader.addEventListener('change', handleImage, false);
+
+            function handleImage(e) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    var img = new Image();
+                    img.onload = function () {
+                        var imgInstance = new fabric.Image(img, {
+                            scaleX: 0.8,
+                            scaleY: 0.8
+                        })
+                        canvas.add(imgInstance);
+                    }
+                    img.src = event.target.result;
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
+
+            // Remove selected object
+            $('#remove').click(function(){
+                canvas.getActiveObject().remove();
+                var $el = $('#imageLoader');
+                $el.wrap('<form>').closest('form').get(0).reset();
+                $el.unwrap();
+            });
+
             // Load image from URL
-            fabric.Image.fromURL('{{ asset('uploads/' ~ frame.imageName ) }}', function(myImg) {
-                var img1 = myImg.set({ left: 15, top: 15 ,width:{{ frame.imageWidth }},height:{{ frame.imageHeight}}    });
+            fabric.Image.fromURL('{{ asset('uploads/' ~ frame.imageName ) }}', function(myImg ) {
+                var img1 = myImg.set({ left: 25, top: 25 ,width:{{ frame.imageWidth }},height:{{ frame.imageHeight}}    });
                 canvas.add(img1);
             });
 
-            // Save image and download
-            function saveImage(e) {
-                this.href = canvas.toDataURL({
-                    format: 'jpeg',
-                    quality: 1.0
-                });
-                this.download = '{{ frame.name }}.png'}
+            // if Edge browser save by loading image on new tab
+            if (/Edge/.test(navigator.userAgent)) {
+                var imageSaver = document.getElementById('imageSaver');
+                imageSaver.addEventListener('click', saveImage, false);
+
+                // Save image and download
+                function saveImage(e) {
+                    var html="<img src='"+canvas.toDataURL()+"' name='{{ frame.imageName }}'/>";
+                    var newTab=window.open();
+                    newTab.document.write(html);}
+            }
+            // If not Edge save by this way
+            else{
+                var imageSaver = document.getElementById('imageSaver');
+                imageSaver.addEventListener('click', saveImage, false);
+                // Save image and download
+                function saveImage(e) {
+                    this.href = canvas.toDataURL({
+                        format: 'png',
+                        quality: 1.0
+                    });
+                    this.download = '{{ frame.name }}.png'}
+            }
+
         </script>
     {% endfor %}
 

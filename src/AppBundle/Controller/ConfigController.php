@@ -19,12 +19,13 @@ class ConfigController extends Controller
 {
     /**
      * @Route("beheer/kleuren", name="configuration")
+     * Load all configuration records.
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {
-        // Load all from entity Category.
+        // Load all from entity Configuration.
         $configuration = $this->getDoctrine()->getRepository('AppBundle:Configuration')->findAll();
 
         return $this->render('admin/configuration.html.twig', [
@@ -33,23 +34,24 @@ class ConfigController extends Controller
     }
 
     /**
-     * @Route("beheer/kleuren/nieuw", name="configuration_new")
+     * @Route("beheer/kleuren/bijwerken/{id}", name="configuration_edit")
+     * Edit the configuration
      * @param Request $request
+     * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function configNewAction(Request $request)
+    public function configEditAction(Request $request, $id)
     {
-        $config = new Configuration();
-        $form = $this->createForm(ConfigurationType::class, $config);
+        $em = $this->getDoctrine()->getManager();
+        $configuration = $em->getRepository('AppBundle:Configuration')->find($id);
+        $form = $this->createForm(ConfigurationType::class, $configuration);
         $form->handleRequest($request);
 
         // Check if the form is submitted & valid.
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var UploadedFile $file
-             */
+
             // Changing the image name with md5.
-            $file=$config->getLogo();
+            $file=$configuration->getLogo();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
             // Move the file into directory.
@@ -57,10 +59,9 @@ class ConfigController extends Controller
                 $this->getParameter('image_directory'),$fileName
             );
 
-            // Saving the new category.
-            $config->setLogo($fileName);
-            $em=$this->getDoctrine()->getManager();
-            $em->persist($config);
+            // Saving the edited configuration.
+            $configuration->setLogo($fileName);
+            $em->persist($configuration);
             $em->flush();
 
             return $this->redirectToRoute('configuration');
@@ -73,17 +74,20 @@ class ConfigController extends Controller
 
     /**
      * @Route("beheer/socialmedia", name="configuration_social")
+     * Load all social media records.
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexSocialAction(Request $request)
     {
+        // Load all from entity Social.
         $socials = $this->getDoctrine()->getRepository('AppBundle:Social')->findAll();
         return $this->render('admin/socialmedia.html.twig',['socials' => $socials]);
     }
 
     /**
      * @Route("beheer/socialmedia/nieuw", name="social_new")
+     * Create a new social media item.
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -96,9 +100,6 @@ class ConfigController extends Controller
         // Check if the form is submitted & valid.
         if ($form->isSubmitted() && $form->isValid()) {
 
-            /**
-             * @var UploadedFile $file
-             */
             // Changing the image name with md5.
             $file=$social->getImageName();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
@@ -108,7 +109,7 @@ class ConfigController extends Controller
                 $this->getParameter('image_directory'),$fileName
             );
 
-            // Saving the new category.
+            // Saving the new social media.
             $social->setImageName($fileName);
             $em=$this->getDoctrine()->getManager();
             $em->persist($social);
@@ -130,11 +131,11 @@ class ConfigController extends Controller
      */
     public function deleteSocialAction($id)
     {
-        // Find id in entity Category
+        // Find id in entity Social
         $em = $this->getDoctrine()->getManager();
         $socials = $em->getRepository('AppBundle:Social')->find($id);
 
-        // If categories doesn't exist redirect them back.
+        // If social media doesn't exist redirect them back.
         if (!$socials) {
             return $this->redirectToRoute('configuration_social');
         }
@@ -172,7 +173,7 @@ class ConfigController extends Controller
                 $this->getParameter('image_directory'),$fileName
             );
 
-            // Saving the edited category.
+            // Saving the edited social media.
             $socials->setImageName($fileName);
             $em->persist($socials);
             $em->flush();
@@ -184,5 +185,4 @@ class ConfigController extends Controller
             'social' => $form->createView()
         ]);
     }
-
 }

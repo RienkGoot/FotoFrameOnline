@@ -10,13 +10,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class FormType
- * Create category form.
+ * Create configuration form.
  * @package AppBundle\Form\Type;
  */
 class ConfigurationType extends AbstractType
 {
     /**
-     * Build the category form.
+     * Build the configuration form.
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -33,7 +33,7 @@ class ConfigurationType extends AbstractType
     }
 
     /**
-     * Use entity Category.
+     * Use entity configuration.
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)

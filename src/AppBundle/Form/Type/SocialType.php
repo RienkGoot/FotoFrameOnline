@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class FormType
- * Create category form.
+ * Create Social media form.
  * @package AppBundle\Form\Type;
  */
 class SocialType extends AbstractType
@@ -31,7 +31,7 @@ class SocialType extends AbstractType
     }
 
     /**
-     * Use entity Category.
+     * Use entity Social.
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)

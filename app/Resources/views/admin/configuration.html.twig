@@ -6,8 +6,7 @@
         <div class="panel  panel-primary">
             <div class="panel-heading text-center">
                 Instellingen
-                <a href="{{ url('configuration_new') }}" class="btn btn-default btn-xs pull-right" role="button">Nieuw</a>
-                <a href="{{ url('configuration_new') }}" style="margin-right: 10px;" class="btn btn-default btn-xs pull-right" role="button">Aanpassen</a>
+                 <a href="{{ path('configuration_edit', {'id': 1}) }}" class="btn btn-default btn-xs pull-right" role="button">Nieuw</a>
                 <div class="clearfix"></div>
             </div>
             <div class="panel-body">
@@ -26,22 +25,28 @@
                     <!-- Load categories -->
                     {% for config in configuration %}
                         <tr>
-                    {#        <td>{{ category.name }}</td>
-                            <td><img width="70px" src="{{ asset('uploads/' ~ category.imageName) }}"></td>#}
+                            <td><img width="100px" src="{{ asset('uploads/' ~ config.logo) }}"></td>
+                            <td><div class="square" style="background-color: {{ config.backgroundColor }}"></div></td>
+                            <td><div class="square" style="background-color: {{ config.menuColor }}"></div></td>
+                            <td><div class="square" style="background-color: {{ config.menuFontColor }}"></div></td>
+                            <td><div class="square" style="background-color: {{ config.panelColor }}"></div></td>
+                            <td><div class="square" style="background-color: {{ config.panelFontColor }}"></div></td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-              {#  <!-- Paginator -->
-                <nav aria-label="Page navigation">
-                    <div class="text-center">
-                        <ul class="pagination">
-                            {{ knp_pagination_render(categories) }}
-                        </ul>
-                    </div>
-                </nav>#}
-            </div>
             </div>
         </div>
     </div>
+    </div>
+
+    <style>
+        .square {
+            float: left;
+            width: 20px;
+            height: 20px;
+            margin: 5px;
+            border: 1px solid rgba(0, 0, 0, .2);
+        }
+    </style>
 {% endblock %}

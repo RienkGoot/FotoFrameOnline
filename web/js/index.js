@@ -34,41 +34,6 @@ $(function(){
     });
 });
 
-// Frame upload handling
-var canvas = new fabric.Canvas('imageCanvas', {
-    backgroundColor: null
-});
-
-var imageLoader = document.getElementById('imageLoader');
-imageLoader.addEventListener('change', handleImage, false);
-
-function handleImage(e) {
-    var reader = new FileReader();
-    reader.onload = function (event) {
-        var img = new Image();
-        img.onload = function () {
-            var imgInstance = new fabric.Image(img, {
-                scaleX: 0.8,
-                scaleY: 0.8
-            })
-            canvas.add(imgInstance);
-        }
-        img.src = event.target.result;
-    }
-    reader.readAsDataURL(e.target.files[0]);
-}
-
-var imageSaver = document.getElementById('imageSaver');
-imageSaver.addEventListener('click', saveImage, false);
-
-// Remove selected object
-$('#remove').click(function(){
-    canvas.getActiveObject().remove();
-    var $el = $('#imageLoader');
-    $el.wrap('<form>').closest('form').get(0).reset();
-    $el.unwrap();
-});
-
 // Google Translator
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({pageLanguage: 'nl', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');

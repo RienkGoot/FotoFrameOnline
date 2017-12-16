@@ -59,16 +59,14 @@ class AdminController extends Controller
 
         // Check if the form is submitted & valid.
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var UploadedFile $file
-             */
+
             // Changing the image name with md5.
             $file=$category->getImageName();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
             // Move the file into directory.
             $file->move(
-              $this->getParameter('image_directory'),$fileName
+                $this->getParameter('image_directory'),$fileName
             );
 
             // Saving the new category.
@@ -186,9 +184,7 @@ class AdminController extends Controller
 
         // Check if the form is submitted & valid.
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var UploadedFile $file
-             */
+
             // Changing the image name with md5.
             $file=$subcategory->getImageName();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
@@ -313,9 +309,7 @@ class AdminController extends Controller
 
         // Check if the form is submitted & valid.
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var UploadedFile $file
-             */
+
             // Changing the image name with md5 + get image dimensions.
             $file=$frame->getImageName();
             list($width, $height) = getimagesize($file);
@@ -407,5 +401,4 @@ class AdminController extends Controller
             'frame' => $form->createView()
         ]);
     }
-
 }
