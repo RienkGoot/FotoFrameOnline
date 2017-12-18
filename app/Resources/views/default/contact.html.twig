@@ -1,5 +1,30 @@
 {% extends 'base.html.twig' %}
-{% block title %}MyPhotoFrameOnline.com - Contact{% endblock %}
+{% block title %}MPFO - Contact{% endblock %}
+
+
+{% block config %}
+<!-- Configuration logo and navbar -->
+    {% for config in configuration %}
+        <img src="{{ asset('uploads/' ~ config.logo) }}" width="100%">
+        <nav class="navbar" style="background-color: {{ config.menuColor }}; color:{{ config.menuFontColor }}">
+    {% endfor %}
+{% endblock %}
+
+    {% block links %}
+        <!-- Configuration link color -->
+        {% for config in configuration %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url('category') }}" style="color: {{ config.menuFontColor }};">Home</a></li>
+                <li><a href="{{ url('contact') }}" style="color: {{ config.menuFontColor }};">Contact</a></li>
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" id="target" class="form-control glyphicon glyphicon-search" placeholder="&#xe003">
+                    </div>
+                </form>
+            </ul>
+        {% endfor %}
+    {% endblock %}
+
 {% block body %}
     <h3 align="center">Contact</h3>
     <hr>
@@ -8,5 +33,14 @@
         {{ form_start(contact) }}
         {{ form_widget(contact) }}
         {{ form_end(contact) }}
+
+        <!-- Social Media -->
+        <div class="container" style="padding-top: 7%;">
+            <div class="text-center center-block">
+                {% for social in socials %}
+                    <a href="{{ social.url }}" target="_blank"><img width="20px" src="{{ asset('uploads/' ~ social.imageName) }}"></a>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 {% endblock %}

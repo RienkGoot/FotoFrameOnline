@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}MyPhotoFrameOnline.com{% endblock %}</title>
+    <title>{% block title %}MPFO{% endblock %}</title>
     {% block stylesheets %}
         <!-- Latest compiled and minified CSS -->
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -13,8 +13,9 @@
     {% endblock %}
 </head>
 
-<img src="{{ asset('images/logo.jpg') }}" width="100%">
-<nav class="navbar navbar-default">
+{% block config %}
+    <!-- Configuration -->
+    {% endblock %}
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -31,19 +32,13 @@
             <form class="navbar-form navbar-left">
                 <div id="google_translate_element"></div>
             </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ url('category') }}">Home</a></li>
-                <li><a href="{{ url('contact') }}">Contact</a></li>
-                <form class="navbar-form navbar-right" role="search">
-                    <div class="form-group">
-                        <input type="text" id="target" class="form-control glyphicon glyphicon-search" placeholder="&#xe003">
-                    </div>
-                </form>
-            </ul>
+            {% block links %}
+                <!-- Configuration -->
+            {% endblock %}
         </div>
     </div>
 </nav>
-<body>
+
 {% if app.session.flashBag.has('success') %}
     <div class="alert alert-success ">
         {% for msg in app.session.flashBag.get('success') %}
@@ -60,6 +55,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 {% endblock %}
-</body>
+
 
 </html>

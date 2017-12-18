@@ -31,35 +31,35 @@ class Configuration
     /**
      * @var string
      *
-     * @ORM\Column(name="background_color", type="string", length=6)
+     * @ORM\Column(name="background_color", type="string", length=7)
      */
     private $backgroundColor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="menu_color", type="string", length=6)
+     * @ORM\Column(name="menu_color", type="string", length=7)
      */
     private $menuColor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="menu_font_color", type="string", length=6)
+     * @ORM\Column(name="menu_font_color", type="string", length=7)
      */
     private $menuFontColor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="panel_color", type="string", length=6)
+     * @ORM\Column(name="panel_color", type="string", length=7)
      */
     private $panelColor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="panel_font_color", type="string", length=6)
+     * @ORM\Column(name="panel_font_color", type="string", length=7)
      */
     private $panelFontColor;
 

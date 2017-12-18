@@ -24,8 +24,9 @@ class FrontController extends Controller
     {
         // Load all from entity Category.
         $categories = $this->getDoctrine()->getRepository('AppBundle:Category')->findAll();
+        // Load configuration and social entities.
+        $configuration = $this->getDoctrine()->getRepository('AppBundle:Configuration')->findAll();
         $socials = $this->getDoctrine()->getRepository('AppBundle:Social')->findAll();
-
 
         //opens countlog.txt to read the number of hits
         $datei = fopen("countlog.txt","r");
@@ -53,6 +54,7 @@ class FrontController extends Controller
         return $this->render('default/category.html.twig', array(
             'categories' => $pagination,
             'categoriesmenu' => $categories,
+            'configuration' => $configuration,
             'socials' => $socials
         ));
     }
@@ -69,7 +71,9 @@ class FrontController extends Controller
         // Load categories for the sidebar menu.
         $catmenu = $this->getDoctrine()->getRepository('AppBundle:Category')->findAll();
         $repository = $this->getDoctrine()->getRepository('AppBundle:Category');
+        // Load configuration and social entities.
         $socials = $this->getDoctrine()->getRepository('AppBundle:Social')->findAll();
+        $configuration = $this->getDoctrine()->getRepository('AppBundle:Configuration')->findAll();
 
         // Find subcategory by id.
         $query = $repository->createQueryBuilder('t')
@@ -90,6 +94,7 @@ class FrontController extends Controller
         return $this->render('default/subcategory.html.twig',array(
                 'categories' => $pagination,
                 'categoriesmenu' => $catmenu,
+                'configuration' => $configuration,
                 'socials' => $socials
             )
         );
@@ -107,7 +112,9 @@ class FrontController extends Controller
         // Load categories for the sidebar menu.
         $catmenu = $this->getDoctrine()->getRepository('AppBundle:Category')->findAll();
         $repository = $this->getDoctrine()->getRepository('AppBundle:Subcategory');
+        // Load configuration and social entities.
         $socials = $this->getDoctrine()->getRepository('AppBundle:Social')->findAll();
+        $configuration = $this->getDoctrine()->getRepository('AppBundle:Configuration')->findAll();
 
         // Find frames by id.
         $query = $repository->createQueryBuilder('t')
@@ -128,6 +135,7 @@ class FrontController extends Controller
         return $this->render('default/frames.html.twig',array(
                 'subcategories' => $pagination,
                 'categoriesmenu' => $catmenu,
+                'configuration' => $configuration,
                 'socials' => $socials )
         );
     }
@@ -142,7 +150,9 @@ class FrontController extends Controller
     {
         // Load entity Frame.
         $repository = $this->getDoctrine()->getRepository('AppBundle:Frame');
+        // Load configuration and social entities.
         $socials = $this->getDoctrine()->getRepository('AppBundle:Social')->findAll();
+        $configuration = $this->getDoctrine()->getRepository('AppBundle:Configuration')->findAll();
 
         // Find frame by id.
         $query = $repository->createQueryBuilder('t')
@@ -154,6 +164,7 @@ class FrontController extends Controller
 
         return $this->render('default/frame.html.twig',array(
                 'frames' => $frames,
+                'configuration' => $configuration,
                 'socials' => $socials )
         );
     }

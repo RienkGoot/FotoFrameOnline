@@ -22,6 +22,10 @@ class ContactController extends Controller
      */
     public function indexAction(Request $request)
     {
+        // Load configuration and social entities.
+        $configuration = $this->getDoctrine()->getRepository('AppBundle:Configuration')->findAll();
+        $socials = $this->getDoctrine()->getRepository('AppBundle:Social')->findAll();
+
         // Create form ContactType
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
@@ -29,25 +33,49 @@ class ContactController extends Controller
         // If the form is submitted and valid.
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // Create new swiftmailer message
-            $message = (new \Swift_Message($form->getData()['subject']))
-                ->setFrom($form->getData()['email'])
-                ->setTo('rienkgoot@gmail.com')
-                ->setBody(
-                    $this->renderView(
-                        'email/contact.html.twig',
-                        array('name' => $form->getData()['name'], 'email' => $form->getData()['email'], 'telephone' => $form->getData()['telephone'], 'message' => $form->getData()['message'] )
-                    ),
-                    'text/html'
-                );
+                // Get the submitted form data
+                $email = $form["email"]->getData();
+                $name = $form["name"]->getData();
+                $telephone = $form["telephone"]->getData();
+                $subject = $form["subject"]->getData();
+                $message = $form["message"]->getData();
 
-            $this->get('mailer')->send($message);
-            $this->addFlash('success', 'Mail verzonden.');
-            return $this->redirectToRoute('contact');
-        }
+                // Check whether submitted data is not empty
+                if(!empty($email) && !empty($name) && !empty($subject) && !empty($message)){
+
+                    if(filter_var($email, FILTER_VALIDATE_EMAIL) === false){
+                        $this->addFlash('success', 'Geen geldig email.');
+                    }else{
+                        // Recipient email
+                        $toEmail = 'myphotoframeonline@gmail.com';
+                        $emailSubject = 'Contact formulier ingevuld door: '.$name;
+                        $htmlContent = '<h2>Contact formulier</h2>
+                         <h4>Naam</h4><p>'.$name.'</p>
+                         <h4>Email</h4><p>'.$email.'</p>
+                         <h4>Telefoon</h4><p>'.$telephone.'</p>
+                         <h4>Onderwerp</h4><p>'.$subject.'</p>
+                         <h4>Bericht</h4><p>'.$message.'</p>';
+
+                        // Set content-type header for sending HTML email
+                        $headers = "MIME-Version: 1.0" . "\r\n";
+                        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+                        // Additional headers
+                        $headers .= 'From: '.$name.'<'.$email.'>'. "\r\n";
+
+                        // Send email
+                        if(mail($toEmail,$emailSubject,$htmlContent,$headers)){
+                            $this->addFlash('success', 'Mail verzonden.');
+                            return $this->redirectToRoute('contact');
+                        }
+                    }
+                }
+            }
 
         return $this->render('default/contact.html.twig', [
             'contact' => $form->createView(),
+            'configuration' => $configuration,
+            'socials' => $socials
         ]);
     }
 }

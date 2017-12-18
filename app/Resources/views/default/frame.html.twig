@@ -1,15 +1,41 @@
 {% extends 'base.html.twig' %}
-{% block title %}MyPhotoFrameOnline.com - Frame uploaden{% endblock %}
+{% block title %}MPFO- Frame uploaden{% endblock %}
+
+{% block config %}
+<!-- Configuration logo and navbar -->
+    {% for config in configuration %}
+        <img src="{{ asset('uploads/' ~ config.logo) }}" width="100%">
+        <nav class="navbar" style="background-color: {{ config.menuColor }}; color:{{ config.menuFontColor }}">
+    {% endfor %}
+{% endblock %}
+
+    {% block links %}
+<!-- Configuration link color -->
+        {% for config in configuration %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url('category') }}" style="color: {{ config.menuFontColor }};">Home</a></li>
+                <li><a href="{{ url('contact') }}" style="color: {{ config.menuFontColor }};">Contact</a></li>
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" id="target" class="form-control glyphicon glyphicon-search" placeholder="&#xe003">
+                    </div>
+                </form>
+            </ul>
+        {% endfor %}
+    {% endblock %}
 
 {% block body %}
+
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.20/fabric.js"></script>
-
+    {% for config in configuration %}
     {% for frame in frames %}
+    <body style="background-color: {{ config.backgroundColor }}">
+    <div class="container-fluid main-container"  style="background-color: {{ config.backgroundColor }}">
         <!-- Frame panel -->
         <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-primary" >
-                <div class="panel-heading">
+            <div class="panel" style="border: 1px solid {{ config.panelColor }}">
+                <div class="panel-heading text-center" style="background-color: {{ config.panelColor }}; color:{{ config.panelFontColor }}">
                     <div class="panel-title pull-left">
                         <input type="file" id="imageLoader" name="imageLoader" accept="image/*"  />
                     </div>
@@ -97,7 +123,7 @@
                 {% endfor %}
             </div>
         </div>
-
+    </body>
         <!-- Load JS with twig -->
         <script>
 
@@ -105,10 +131,8 @@
             var canvas = new fabric.Canvas('imageCanvas', {
                 backgroundColor: 'rgba(255,255,255,0)'
             });
-
             var imageLoader = document.getElementById('imageLoader');
             imageLoader.addEventListener('change', handleImage, false);
-
             function handleImage(e) {
                 var reader = new FileReader();
                 reader.onload = function (event) {
@@ -124,7 +148,6 @@
                 }
                 reader.readAsDataURL(e.target.files[0]);
             }
-
             // Remove selected object
             $('#remove').click(function(){
                 canvas.getActiveObject().remove();
@@ -132,18 +155,15 @@
                 $el.wrap('<form>').closest('form').get(0).reset();
                 $el.unwrap();
             });
-
             // Load image from URL
             fabric.Image.fromURL('{{ asset('uploads/' ~ frame.imageName ) }}', function(myImg ) {
                 var img1 = myImg.set({ left: 25, top: 25 ,width:{{ frame.imageWidth }},height:{{ frame.imageHeight}}    });
                 canvas.add(img1);
             });
-
             // if Edge browser save by loading image on new tab
             if (/Edge/.test(navigator.userAgent)) {
                 var imageSaver = document.getElementById('imageSaver');
                 imageSaver.addEventListener('click', saveImage, false);
-
                 // Save image and download
                 function saveImage(e) {
                     var html="<img src='"+canvas.toDataURL()+"' name='{{ frame.imageName }}'/>";
@@ -162,8 +182,7 @@
                     });
                     this.download = '{{ frame.name }}.png'}
             }
-
         </script>
     {% endfor %}
-
+    {% endfor %}
 {% endblock %}

@@ -1,13 +1,39 @@
 {% extends 'base.html.twig' %}
-{% block title %}MyPhotoFrameOnline.com - Subcategorie{% endblock %}
-{% block body %}
+{% block title %}MPFO - Subcategorie{% endblock %}
 
-    <div class="container-fluid main-container">
+
+{% block config %}
+<!-- Configuration logo and navbar -->
+    {% for config in configuration %}
+<img src="{{ asset('uploads/' ~ config.logo) }}" width="100%">
+<nav class="navbar" style="background-color: {{ config.menuColor }}; color:{{ config.menuFontColor }}">
+    {% endfor %}
+    {% endblock %}
+
+    {% block links %}
+        <!-- Configuration link color -->
+        {% for config in configuration %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url('category') }}" style="color: {{ config.menuFontColor }};">Home</a></li>
+                <li><a href="{{ url('contact') }}" style="color: {{ config.menuFontColor }};">Contact</a></li>
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" id="target" class="form-control glyphicon glyphicon-search" placeholder="&#xe003">
+                    </div>
+                </form>
+            </ul>
+        {% endfor %}
+    {% endblock %}
+
+{% block body %}
+    {% for config in configuration %}
+    <body style="background-color: {{ config.backgroundColor }}">
+    <div class="container-fluid main-container"  style="background-color: {{ config.backgroundColor }}">
         <div class="col-md-2 sidebar">
             <div class="row">
                 <!-- Sidebar menu -->
                 <div class="side-menu">
-                    <nav class="navbar navbar-default" role="navigation">
+                    <nav class="navbar navbar-default" role="navigation" style="border: 1px solid {{ config.panelColor }}">
                         <div class="side-menu-container">
                             <ul class="nav navbar-nav"  id="myUL" >
                                 {% for category in categoriesmenu|sortbyfield('name') %}
@@ -37,8 +63,8 @@
 
         <!-- Subcategory Display -->
         <div class="col-md-10 ">
-            <div class="panel  panel-primary">
-                <div class="panel-heading text-center">
+            <div class="panel" style="border: 1px solid {{ config.panelColor }}">
+                <div class="panel-heading text-center" style="background-color: {{ config.panelColor }}; color:{{ config.panelFontColor }}">
                     {% for category in categories %}  Subcategorieën in {{ category.name }}   {% endfor %}
                 </div>
                 <div class="panel-body">
@@ -67,7 +93,7 @@
             </div>
         </div>
     </div>
-
+    {% endfor %}
     <!-- Social Media -->
     <div class="container" style="padding-top: 7%;">
         <div class="text-center center-block">
@@ -76,4 +102,5 @@
             {% endfor %}
         </div>
     </div>
+    </body>
 {% endblock %}
