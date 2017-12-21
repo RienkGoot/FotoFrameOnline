@@ -39,7 +39,7 @@
                     <div class="panel-title pull-left">
                         <input type="file" id="imageLoader" name="imageLoader" accept="image/*"  />
                     </div>
-                    <div class="pull-right"> <a href="#" id="imageSaver" class="btn btn-default"><span class="glyphicon glyphicon-save"></span> Opslaan</a></div>
+                    <div class="pull-right"> <a href="{{ path('download', {'id': frame.id}) }}" id="imageSaver" class="btn btn-default"><span class="glyphicon glyphicon-save"></span> Opslaan</a></div>
                     <div class="pull-right" style="margin-right: 10px;"> <a href="#" id="remove" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Verwijderen</a></div>
                     <div class="pull-right" style="margin-right: 10px;"> <a data-toggle="modal" data-target="#helpModal" class="btn btn-default"><span class="glyphicon glyphicon-question-sign"></span> Help</a></div>
                     <div class="clearfix"></div>
@@ -160,8 +160,7 @@
                 var img1 = myImg.set({ left: 25, top: 25 ,width:{{ frame.imageWidth }},height:{{ frame.imageHeight}}    });
                 canvas.add(img1);
             });
-            // if Edge browser save by loading image on new tab
-            if (/Edge/.test(navigator.userAgent)) {
+
                 var imageSaver = document.getElementById('imageSaver');
                 imageSaver.addEventListener('click', saveImage, false);
                 // Save image and download
@@ -169,19 +168,8 @@
                     var html="<img src='"+canvas.toDataURL()+"' name='{{ frame.imageName }}'/>";
                     var newTab=window.open();
                     newTab.document.write(html);}
-            }
-            // If not Edge save by this way
-            else{
-                var imageSaver = document.getElementById('imageSaver');
-                imageSaver.addEventListener('click', saveImage, false);
-                // Save image and download
-                function saveImage(e) {
-                    this.href = canvas.toDataURL({
-                        format: 'png',
-                        quality: 1.0
-                    });
-                    this.download = '{{ frame.name }}.png'}
-            }
+
+
         </script>
     {% endfor %}
     {% endfor %}

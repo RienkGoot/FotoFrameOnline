@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Doctrine\DBAL\Driver\Connection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -167,5 +168,24 @@ class FrontController extends Controller
                 'configuration' => $configuration,
                 'socials' => $socials )
         );
+    }
+
+    /**
+     * @Route("/download/{id}", name="download")
+     * @param Request $request
+     * @param $id
+     * @param Connection $conn
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function DownloadAction(Request $request, $id, Connection $conn)
+    {
+        $stmt = $conn->prepare("
+        update frame
+        set download = download + 1
+        where id = '".$id."'");
+        $stmt->execute();
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 }

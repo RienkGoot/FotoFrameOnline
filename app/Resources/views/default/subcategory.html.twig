@@ -70,7 +70,6 @@
                 <div class="panel-body">
                     {% for category in categories %}
                         {% for subcategory in category.subcategory| sortbyfield('name') %}
-
                             <div class="col-md-3" style="height:210px">
                                 <a href="{{ path('subcategory_frame', {'id': subcategory.id}) }}">
                                     <img src="{{ asset('uploads/' ~ subcategory.imageName) }}" width="160px">

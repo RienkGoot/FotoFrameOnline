@@ -24,11 +24,11 @@ class ConfigurationType extends AbstractType
     {
         $builder
             ->add('logo', FileType::class, ['label' => 'Logo:', 'required' => true,'data_class' => null, 'attr'  => array('accept' => 'image/*')])
-            ->add('backgroundColor', ColorType::class, ['label' => 'Achtergrond kleur', 'attr'  => array('style' => 'width: 10%')])
-            ->add('menuColor', ColorType::class, ['label' => 'Menu kleur', 'attr'  => array('style' => 'width: 10%')])
-            ->add('menuFontColor', ColorType::class, ['label' => 'Menu tekst kleur', 'attr'  => array('style' => 'width: 10%')])
-            ->add('panelColor', ColorType::class, ['label' => 'Paneel kleur', 'attr'  => array('style' => 'width: 10%')])
-            ->add('panelFontColor', ColorType::class, ['label' => 'Paneel tekst kleur', 'attr'  => array('style' => 'width: 10%')])
+            ->add('backgroundColor', ColorType::class, ['label' => 'Achtergrond kleur', 'attr'  => array('style' => 'width: 10%', 'class' => 'jscolor {hash:true}')])
+            ->add('menuColor', ColorType::class, ['label' => 'Menu kleur', 'attr'  => array('style' => 'width: 10%', 'class' => 'jscolor {hash:true}')])
+            ->add('menuFontColor', ColorType::class, ['label' => 'Menu tekst kleur', 'attr'  => array('style' => 'width: 10%', 'class' => 'jscolor {hash:true}')])
+            ->add('panelColor', ColorType::class, ['label' => 'Paneel kleur', 'attr'  => array('style' => 'width: 10%', 'class' => 'jscolor {hash:true}')])
+            ->add('panelFontColor', ColorType::class, ['label' => 'Paneel tekst kleur', 'attr'  => array('style' => 'width: 10%', 'class' => 'jscolor {hash:true}')])
             ->add('save', SubmitType::class, ['label' => 'Opslaan']);
     }
 

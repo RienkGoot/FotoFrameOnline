@@ -26,6 +26,10 @@
     {% endblock %}
 
 {% block body %}
+            {% for config in configuration %}
+
+            <body style="background-color: {{ config.backgroundColor }}">
+
     <h3 align="center">Contact</h3>
     <hr>
     <!-- Contact Form -->
@@ -43,4 +47,5 @@
             </div>
         </div>
     </div>
+       {% endfor %}
 {% endblock %}

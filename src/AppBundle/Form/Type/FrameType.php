@@ -3,6 +3,7 @@ namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -25,6 +26,9 @@ class FrameType extends AbstractType
         $builder
             ->add('name', TextType::class, ['label' => 'Naam:', 'required' => true])
             ->add('imageName', FileType::class, ['label' => 'Afbeelding:', 'required' => true,'data_class' => null])
+            ->add('download', HiddenType::class,array(
+                'data' => '0',
+            ))
             ->add('save', SubmitType::class, ['label' => 'Opslaan']);
     }
 

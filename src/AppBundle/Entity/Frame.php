@@ -93,6 +93,29 @@ class Frame
         $this->imageHeight = $imageHeight;
     }
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="download", type="integer", length=11)
+     */
+    private $download;
+
+    /**
+     * @return int
+     */
+    public function getDownload()
+    {
+        return $this->download;
+    }
+
+    /**
+     * @param int $download
+     */
+    public function setDownload($download)
+    {
+        $this->download = $download;
+    }
+
 
     /**
      * Get id
